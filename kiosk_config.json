@@ -1,0 +1,41 @@
+{   "devices": [ 
+    {"id":"709FD2E0F908","name":"local_comite","desc":"Display M5 Paper au local comité"},
+    {"id":"1AC2F8D0F901","name":"kiosk_local_comite","desc":"Kiosk Raspberry PI au local comité"},
+    {"id":"2978B6V32A22","name":"dev_andré","desc":"Mac de André pour developpement"}
+    ],
+    "tokens": [ 
+    {"device_id":"709FD2E0F908","token": "abcfef0123456789abcfef0123456789abcfef0123456789abcfef0123456789"},
+    {"device_id":"1AC2F8D0F901","token": "abcfef0123456789abcfef0123456789abcfef0123456789abcfef0123456789"}
+    ],
+
+    "playlist":[
+     
+      
+      {
+        "url": "/kiosk/pages/vitrine019_kiosk.php",
+        "seconds": 10,
+        "button": "Ouchy"
+      },
+      {
+        "url": "/kiosk/pages/meteo_kiosk.php",
+        "seconds": 10,
+        "button": "Météo"
+      },
+      {
+        "url": "/kiosk/pages/webcam_kiosk.php",
+        "seconds": 10,
+        "button": "Webcam"
+      },
+       {
+        "url": "/kiosk/pages/calendrier_kiosk.php",
+        "seconds": 10,
+        "button": "Calendrier"
+      },
+        
+       {
+        "url": "https://map.sauvetage-ouchy.ch/?kiosk=1",
+        "seconds": 20,
+        "button": "Carte SISL & SOS"
+      }
+    ]
+}

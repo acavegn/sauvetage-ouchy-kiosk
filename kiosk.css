@@ -1,0 +1,238 @@
+/* *****************
+ * CSS pour la main page du kiosk
+ * **************** */
+
+.toolbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--toolbar-h);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg);
+  color: var(--fg);
+  border-bottom: 1px solid #1f2937;
+  z-index: 10;
+}
+
+.toolbar button {
+  appearance: none;
+  border: 1px solid #334155;
+  background: #111827;
+  color: var(--fg);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.toolbar button:hover {
+  filter: brightness(1.1);
+}
+
+.toolbar .toggle {
+  border-color: #14532d;
+}
+
+.toolbar .toggle.on {
+  background: #064e3b;
+}
+
+.toolbar .toggle.off {
+  background: #7f1d1d;
+  border-color: #7f1d1d;
+}
+
+.toolbar .pages {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.toolbar .page-btn.active {
+  outline: 2px solid var(--accent);
+}
+
+.toolbar.night {
+  visibility:hidden;
+}
+.toolbar.day {
+  visibility:visible;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.kiosk-frame {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: var(--toolbar-h);
+  width: 100%;
+  height: calc(100vh - var(--toolbar-h));
+  border: 0;
+  background: #000;
+  will-change: transform;
+  transform: translateX(0);
+}
+
+
+.kiosk-frame.night {
+  visibility:hidden;
+}
+.kiosk-frame.day {
+  visibility:visible;
+}
+
+/* ----- Effet sortie ----- */
+/* La page actuelle glisse vers la gauche (disparaît) */
+.kiosk-frame.slide-out-left {
+  transition: transform 600ms linear;
+  transform: translateX(-100%);
+}
+
+/* ----- Position initiale de la suivante ----- */
+/* Prépare la nouvelle page hors écran à droite (sans transition) */
+.kiosk-frame.pre-slide-in-left {
+  transition: none;
+  transform: translateX(100%);
+}
+
+/* ----- Effet d’entrée ----- */
+/* La nouvelle page arrive de la droite vers sa position normale */
+.kiosk-frame.slide-in-left {
+  transition: transform 1000ms linear;
+  transform: translateX(0);
+}
+
+/* petit indicateur discret quand ça fait défiler */
+.status {
+  font-size: 12px;
+  opacity: 0.8;
+  padding-left: 0.5rem;
+}
+
+/* ********
+   Mode Nuit 
+************** */
+
+/* Overlay plein écran */
+#night-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, 0.9), #000 60%);
+  display: grid;
+  place-items: center;
+  z-index: 999999; /* au-dessus de tout */
+  transition: opacity 350ms ease;
+  will-change: transform, opacity, background-position;
+}
+
+/* États */
+.night-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.night-visible {
+  opacity: 1;
+  pointer-events: auto;
+  animation: night-drift 360s linear infinite alternate,
+    night-bg-shift 180s ease-in-out infinite;
+}
+
+/* Contenu */
+.night-content {
+  text-align: center;
+  user-select: none;
+}
+
+.night-text {
+  margin-top: 18px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+    "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 22px;
+  color: #d7e1ff;
+  opacity: 0.9;
+}
+
+.night-sub {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #b7c0dd;
+  opacity: 0.7;
+}
+
+/* “Lune” avec une douce respiration */
+.night-moon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.85) 0 20%,
+      rgba(255, 255, 255, 0.6) 21% 40%,
+      transparent 41%
+    ),
+    radial-gradient(
+      circle at 70% 60%,
+      rgba(255, 255, 255, 0.25) 0 18%,
+      transparent 19%
+    ),
+    linear-gradient(180deg, #e8ecff 0%, #b9c7ff 100%);
+  box-shadow: 0 0 30px rgba(180, 195, 255, 0.25);
+  animation: night-breathe 4s ease-in-out infinite;
+}
+
+@keyframes night-breathe {
+  0% {
+    transform: translateY(0) scale(1);
+    filter: brightness(0.9);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.03);
+    filter: brightness(1.1);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    filter: brightness(0.9);
+  }
+}
+
+/* Dérive de l’overlay : ~±n px + micro-rotation */
+@keyframes night-drift {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  25% {
+    transform: translate(10px, -10px) rotate(10deg);
+  }
+  50% {
+    transform: translate(20px, 10px) rotate(-10deg);
+  }
+  75% {
+    transform: translate(-10px, 30px) rotate(20deg);
+  }
+  100% {
+    transform: translate(-5px, -1px) rotate(-20deg);
+  }
+}
+
+/* On bouge aussi légèrement le centre du radial-gradient */
+@keyframes night-bg-shift {
+  0% {
+    background-position: 50% 40%;
+  }
+  50% {
+    background-position: 52% 42%;
+  }
+  100% {
+    background-position: 48% 38%;
+  }
+}

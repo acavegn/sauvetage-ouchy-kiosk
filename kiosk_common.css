@@ -1,0 +1,96 @@
+/* *****************
+ * CSS commun pour le differentes pages du kiosk
+ * afin de garder une certaine cohérence de couleurs et mise en page
+ * **************** */
+
+:root {
+  --toolbar-h: 56px;
+  --title-h: 100px;
+  --bg: #0f172a;
+  --fg: #e5e7eb;
+  --accent: #22c55e;
+  --brand-1: #0ea5e9; /* bleu léger */
+  --brand-2: #22c55e; /* vert léger */
+  --text: #ffffff;
+  --muted: #cbd5e1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #000;
+  color: var(--text);
+  font-family: "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Apple Color Emoji",
+     "Noto Color Emoji", /* <— important pour Linux */ 
+    "Segoe UI Emoji",
+    "Segoe UI Symbol", sans-serif;
+  user-select: none; /* Prévention de sélection + curseur caché (kiosk) */
+  overflow: hidden; /* Prevention des scrool bar*/
+  font-size:20px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  font-display: swap;
+}
+
+/* Fond plein écran avec overlay sombre pour le contraste */
+.backgroundpage {
+  isolation: isolate;
+}
+.backgroundpage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+       /* radial-gradient(1200px 700px at 10% 0%, rgba(14,165,233,.25), transparent 60%),
+        radial-gradient(900px 600px at 90% 30%, rgba(34,197,94,.20), transparent 60%),
+        linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.75));*/ radial-gradient(
+      900px 600px at 90% 30%,
+      rgba(34, 197, 94, 0.2),
+      transparent 60%
+    ),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.75));
+  backdrop-filter: blur(2px);
+}
+
+/* En-tête : le logo gauche et droite, et le titre au centre */
+.header {
+  display: grid;
+  grid-template-columns: 180px 1fr 100px;
+  align-items: center;
+  gap: 24px;
+  padding: 25px 25px 0px 25px;
+}
+.header > :nth-child(1) {
+  justify-self: start;
+  text-align: left;
+}
+.header > :nth-child(2) {
+  justify-self: center;
+  text-align: center;
+}
+.header > :nth-child(3) {
+  justify-self: end;
+  text-align: right;
+}
+.header img {
+  height: 75px;
+  object-fit: contain;
+}
+.header .title {
+  text-align: center;
+  line-height: 1.3;
+  margin: 0;
+  font-size: clamp(22px, 2.2vw + 12px, 40px);
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: #5588bb;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+}
