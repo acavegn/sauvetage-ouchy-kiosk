@@ -91,8 +91,11 @@ Ce folder contient les differentes pages à afficher
 
 # config PI 
 
+- accès réseau guest sauvetage : 192.168.254.17
+
 ## connection ssh
 ssh pi@192.168.1.32
+
 
 ## Update OS
 To update the OS after initial flash 
